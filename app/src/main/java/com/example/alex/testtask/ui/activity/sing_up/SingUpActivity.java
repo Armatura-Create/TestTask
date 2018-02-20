@@ -114,6 +114,10 @@ public class SingUpActivity extends AppCompatActivity implements ILoadingStatus<
                 Toast.makeText(SingUpActivity.this, "Телефон не валидный.\nExample:+380 00 000 00 00", Toast.LENGTH_SHORT).show();
                 return;
             }
+            if(!CheckerInputData.isSite(mBinding.signUpLayout.site.getText().toString().trim())){
+                Toast.makeText(SingUpActivity.this, "Неправильный URL сайта", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             SingUpModel model = new SingUpModel();
             model.setEmail(mBinding.signUpLayout.login.getText().toString().trim());

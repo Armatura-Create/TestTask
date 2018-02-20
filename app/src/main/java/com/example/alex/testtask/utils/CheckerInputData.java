@@ -17,4 +17,9 @@ public final class CheckerInputData {
     public static boolean isPassword(String password){
         return Pattern.compile("(?=.*[0-9])(?=.*[A-Z])[0-9a-zA-Z]{8,20}").matcher(password).matches();
     }
+
+    public static boolean isSite(String site){
+        return Pattern.compile("(^((https?|ftp)://)?([a-z0-9]{1})((\\.[a-z0-9-])|([a-z0-9-]))*\\.([a-z]{2,6})(/?)$)").matcher(site).matches();
+    }
+
 }
