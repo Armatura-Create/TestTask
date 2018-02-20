@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TestTask</string>
+    <string name="host">http://164.132.224.6</string>
+    <string name="sing_in">Авторизация</string>
+    <string name="sing_up">Регистрация</string>
+    <string name="profile">Профиль</string>
+</resources>
