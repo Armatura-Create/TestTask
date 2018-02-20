@@ -98,11 +98,11 @@ public class SingUpModel {
         JSONObject json = new JSONObject();
         json.put("email", email);
         json.put("password", password);
+        json.put("pushToken", pushToken);
         json.put("phone", phone);
         json.put("site", site);
         json.put("address", address);
         json.put("company", company);
-        json.put("pushToken", pushToken);
         return json.toString().replaceAll("\\\\", "");
     }
 

@@ -39,7 +39,7 @@ import okhttp3.RequestBody;
 public class SingUpActivity extends AppCompatActivity implements ILoadingStatus<String>, SingUpContract.View {
 
     ActivitySingUpBinding mBinding;
-    private static final int PERMISSION_REQUEST_CODE = 101;
+    private static final int PERMISSION_REQUEST_CODE = 100;
     private static final int REQUEST_CODE = 200;
 
     private Uri imageUri;
@@ -125,7 +125,7 @@ public class SingUpActivity extends AppCompatActivity implements ILoadingStatus<
             model.setToken(FirebaseInstanceId.getInstance().getToken());
 
             try {
-//                Log.e("initListeners: ", FirebaseInstanceId.getInstance().getToken());
+                Log.e("initListeners: ", model.toJSONString());
                 presenter.register(getImage(), model.toJSONString());
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -4,4 +4,6 @@
     <string name="sing_in">Авторизация</string>
     <string name="sing_up">Регистрация</string>
     <string name="profile">Профиль</string>
+    <string name="launch_app">com.example.alex.testtask.LAUCH_APP</string>
+    <string name="file_share">com.example.alex.testtask.PREFERENCE_FILE_KEY</string>
 </resources>
