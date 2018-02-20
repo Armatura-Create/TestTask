@@ -1,10 +1,11 @@
 package com.example.alex.testtask.firebase;
 
-import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.alex.testtask.ui.activity.sing_in.SingInActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -33,12 +34,19 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.e(TAG, "Message data payload: " + remoteMessage.getData().toString());
         }
 
-        Intent intent = new Intent("TestTask");
-        intent.putExtra("body", remoteMessage.getNotification().getBody());
-        intent.putExtra("from", remoteMessage.getNotification().getTitle());
-
-//        Toast.makeText(getBaseContext(), remoteMessage.getNotification().getBody(), Toast.LENGTH_SHORT).show();
-
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+        postToastMessage(remoteMessage.getNotification().getBody());
     }
+
+    public void postToastMessage(final String message) {
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        handler.post(new Runnable() {
+
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
 }
