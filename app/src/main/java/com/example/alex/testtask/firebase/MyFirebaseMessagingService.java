@@ -1,16 +1,10 @@
 package com.example.alex.testtask.firebase;
 
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.widget.Toast;
 
-import com.example.alex.testtask.R;
-import com.example.alex.testtask.ui.activity.profile.ProfileActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -20,30 +14,31 @@ import com.google.firebase.messaging.RemoteMessage;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
+    private static final String TAG = "FCMService";
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        sendNotification(remoteMessage.getNotification().getBody());
+        if (remoteMessage.getNotification() != null) {
+            Log.e(TAG, "From title: " + remoteMessage.getNotification().getTitle());
+            Log.e(TAG, "From body: " + remoteMessage.getNotification().getBody());
+            Log.e(TAG, "actionClick: " + remoteMessage.getNotification().getClickAction());
+        }
 
-    }
-    private void sendNotification(String messageBody) {
-        Intent intent = new Intent(this, ProfileActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        if (remoteMessage.getNotification() != null) {
+            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+        }
 
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        if (remoteMessage.getData().size() > 0) {
+            Log.e(TAG, "Message data payload: " + remoteMessage.getData().toString());
+        }
 
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_launcher_background)
-                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_launcher_background))
-                .setContentTitle(this.getString(R.string.app_name))
-                .setContentText(messageBody)
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri);
+        Intent intent = new Intent("TestTask");
+        intent.putExtra("body", remoteMessage.getNotification().getBody());
+        intent.putExtra("from", remoteMessage.getNotification().getTitle());
 
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//        Toast.makeText(getBaseContext(), remoteMessage.getNotification().getBody(), Toast.LENGTH_SHORT).show();
 
-        notificationManager.notify(0, notificationBuilder.build());
-
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 }

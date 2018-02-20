@@ -108,6 +108,8 @@ public class SingInActivity extends AppCompatActivity implements ILoadingStatus<
         finish();
     }
 
+
+
     @Override
     public void onSuccess(String info) {
         startActivity(new Intent(this, ProfileActivity.class));
